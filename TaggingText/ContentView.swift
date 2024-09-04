@@ -22,13 +22,14 @@ struct ContentView: View {
                         }
                         .lineLimit(3...)
                 }  footer: {
-                    Text("Recognize Languages and Names With Natural Language.")
+                    Text("Recognize Names, Places and Organizations with Natural Language Processing")
                 }
                 
                 Section{
                     List(viewModel.suggestions){ suggestion in
                         HStack{
                             Image(systemName: suggestion.image)
+                                .foregroundStyle(Color(uiColor: .tintColor))
                             Text(suggestion.text)
                         }
                     }
@@ -57,9 +58,9 @@ struct Suggestion: Identifiable{
     
     var image: String {
         switch self.type {
-        case "PlaceName":  {return "building.columns.fill"}()
+        case "PlaceName":  {return "mappin.and.ellipse"}()
         case "PersonalName":  {return "person.fill"}()
-        case "OrganizationName":  {return "person.3.fill"}()
+        case "OrganizationName":  {return "person.2.fill"}()
         default: "percamera.metering.unknown"
         }
     }
@@ -77,8 +78,9 @@ extension ContentView{
         
         
         let sampleInputTexts = [
-            "Hoy participe en UNIDOS, conoci a Andrea y a Luis, fuimos al Museo Papalote en Fundidora",
-            "Hoy en TECHO construimos 2 casas, Rey, Cielo a Luis y su familia"
+            "Today I participated in the UNIDOS, met Sarah and John, we went to the Papalote Museum in Fundidora.",
+            "Today at TECHO, we built 2 houses for Mike, Emma, David, and his family.",
+            "Jessica, Chris, Emily, climbing group in Ciénega de Gonzalez."
         ]
         
         init(){
@@ -88,7 +90,7 @@ extension ContentView{
         
         func generateRandomSample(){
           
-            let index = Int.random(in: 0...1)
+            let index = Int.random(in: 0...sampleInputTexts.count-1)
             if lastIndex == index {
                 generateRandomSample()
             } else {
